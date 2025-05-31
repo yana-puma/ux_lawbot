@@ -6,6 +6,9 @@ import re
 # Set your OpenAI API key
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
+from openai import OpenAI
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
 # Define UX law links
 law_links = {
     "Hick’s Law": "https://lawsofux.com/hicks-law/",
@@ -45,7 +48,7 @@ if st.button("Get UX Advice") and user_input:
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_input}
     ]
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages,
         temperature=temperature,
